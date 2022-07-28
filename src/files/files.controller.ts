@@ -4,6 +4,7 @@ import { ApiFileFields } from './api-file-fields.decorator';
 import { ApiFile, ApiImageFile, ApiPdfFile } from './api-file.decorator';
 import { ApiFiles } from './api-files.decorator';
 import { FilesService } from './files.service';
+import { ParseFile } from './parse-file.pipe';
 
 @Controller('files')
 @ApiTags('files')
@@ -12,13 +13,13 @@ export class FilesController {
 
   @Post('upload')
   @ApiFile('avatar', true)
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
+  uploadFile(@UploadedFile(ParseFile) file: Express.Multer.File) {
     console.log(file);
   }
 
   @Post('uploads')
   @ApiFiles('files', true)
-  uploadFiles(@UploadedFiles() files: Array<Express.Multer.File>) {
+  uploadFiles(@UploadedFiles(ParseFile) files: Array<Express.Multer.File>) {
     console.log(files);
   }
 
@@ -27,19 +28,19 @@ export class FilesController {
     { name: 'avatar', maxCount: 1, required: true },
     { name: 'background', maxCount: 1 },
   ])
-  uploadMultipleFiles(@UploadedFiles() files: Express.Multer.File[]) {
+  uploadMultipleFiles(@UploadedFiles(ParseFile) files: Express.Multer.File[]) {
     console.log(files);
   }
 
   @Post('avatar')
   @ApiImageFile('avatar', true)
-  uploadAvatar(@UploadedFile() file: Express.Multer.File) {
+  uploadAvatar(@UploadedFile(ParseFile) file: Express.Multer.File) {
     console.log(file);
   }
 
   @Post('document')
   @ApiPdfFile('document', true)
-  uploadDocument(@UploadedFile() file: Express.Multer.File) {
+  uploadDocument(@UploadedFile(ParseFile) file: Express.Multer.File) {
     console.log(file);
   }
 }
