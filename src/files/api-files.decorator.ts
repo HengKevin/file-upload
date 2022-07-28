@@ -5,12 +5,12 @@ import { ApiBody, ApiConsumes } from '@nestjs/swagger';
 
 export function ApiFiles(
   fieldName = 'files',
-  required: false,
-  maxCount: 10,
+  required = false,
+  maxCount = 10,
   localOptions?: MulterOptions,
 ) {
   return applyDecorators(
-    UseInterceptors(FilesInterceptor(fieldName, MaxCount, localOptions)),
+    UseInterceptors(FilesInterceptor(fieldName, maxCount, localOptions)),
     ApiConsumes('multipart/form-data'),
     ApiBody({
       schema: {
